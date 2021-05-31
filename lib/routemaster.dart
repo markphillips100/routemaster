@@ -647,6 +647,8 @@ class RoutemasterDelegate extends RouterDelegate<RouteData>
         final page = current.pageWrapper;
 
         if (page is PageInserter) {
+          // Page inserters can provide a list of paths to insert above them in
+          // the navigation hierarchy
           final insertedPages =
               (page as PageInserter).getPagesToInsert(result).map(
                     (insertPath) => _getSinglePage(
@@ -658,11 +660,6 @@ class RoutemasterDelegate extends RouterDelegate<RouteData>
                   );
 
           result.insertAll(0, insertedPages);
-
-          // for (final insertPath in insertedPages) {
-          //   final insertedPage = _getPageForTab(_RouteRequest(path: insertPath));
-          //   result.insertAll(0, )
-          // }
         }
 
         if (isLastRoute) {
@@ -826,7 +823,12 @@ class RoutemasterDelegate extends RouterDelegate<RouteData>
     }
 
     if (isLastRoute && page is PageContainer) {
-      return _RedirectResult((page as PageContainer).redirectPath);
+      return _RedirectResult(
+        pathContext.join(
+          routeRequest.uri.path,
+          (page as PageContainer).redirectPath,
+        ),
+      );
     }
 
     if (page is StatefulPage) {
