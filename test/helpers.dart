@@ -5,7 +5,7 @@ import 'package:routemaster/routemaster.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:routemaster/src/system_nav.dart';
 
-const kTransitionDuration = Duration(milliseconds: 310);
+const kTransitionDuration = Duration(milliseconds: 350);
 
 class MockHistoryProvider implements HistoryProvider {
   final void Function(String) onReplaceState;
